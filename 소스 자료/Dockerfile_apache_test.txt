@@ -1,0 +1,16 @@
+#base image 설정
+FROM ubuntu:16.04
+#이미지를 생성한 사람의 정보(생략가능)
+MAINTAINER "neighbor-docker <neighbor.docler@test.docker>"
+#라벨 설정
+LABEL "purpose"="practice"
+#명령어 실행
+RUN apt-get update
+RUN apt-get install apache2 -y
+#파일 디렉토리 추가
+ADD test.html /var/www/html
+#/bin/bash 에 test.html 있으면 “hello”내용 추가, 없으면 “hello”를 담은 test.html파일생성
+RUN ["/bin/bash","-c", "echo hello >> test.html"] 
+#포트 익스포트
+EXPOSE 80
+CMD apachectl -D FOREGROUND
